@@ -1,6 +1,6 @@
 /**
  **************************************************************************************************
- * @file        version.h
+ * @file        bsp_tim.h
  * @author
  * @version
  * @date        
@@ -10,8 +10,8 @@
  *
  **************************************************************************************************
  */
-#ifndef _VERSION_H_
-#define _VERSION_H_
+#ifndef _BSP_TIM_H_
+#define _BSP_TIM_H_
 
 /**
  * @addtogroup    XXX 
@@ -19,37 +19,25 @@
  */
 #include "self_def.h"
 /**
- * @addtogroup    version_Modules 
+ * @addtogroup    bsp_tim_Modules 
  * @{  
  */
 
 /**
- * @defgroup      version_Exported_Macros 
+ * @defgroup      bsp_tim_Exported_Macros 
  * @{  
  */
-#define VERSION_MAJOR		0   // 0~255
-#define VERSION_MINOR		0   // 0~255
-#define VERSION_LITE		1	// 0~255
+#define		BSP_CLOCK0  0
+#define		BSP_CLOCK1  1
+#define 	BSP_CLOCK2  2
 
-#define FRAME_VERSION_MAJOR		0   // 0~255
-#define FRAME_VERSION_MINOR		0   // 0~255
-#define FRAME_VERSION_LITE		2	// 0~255
 
 /**
  * @}
  */
 
 /**
- * @defgroup      version_Exported_Constants
- * @{  
- */
-
-/**
- * @}
- */
-
-/**
- * @defgroup      version_Exported_Types 
+ * @defgroup      bsp_tim_Exported_Constants
  * @{  
  */
 
@@ -58,7 +46,7 @@
  */
 
 /**
- * @defgroup      version_Exported_Variables 
+ * @defgroup      bsp_tim_Exported_Types 
  * @{  
  */
 
@@ -67,11 +55,23 @@
  */
 
 /**
- * @defgroup      version_Exported_Functions 
+ * @defgroup      bsp_tim_Exported_Variables 
  * @{  
  */
-uint32_t Version_Get_Bin(void);
-char * Version_Get_Str(void);
+
+/**
+ * @}
+ */
+
+/**
+ * @defgroup      bsp_tim_Exported_Functions 
+ * @{  
+ */
+void BSP_Clock_DeInit(uint8_t BSP_CLOCKx);
+void BSP_Clock_Init(uint8_t BSP_CLOCKx);
+uint32_t BSP_GetTimrCurCount(uint8_t BSP_CLOCKx);
+void BSP_Clock_StartOnceTimer(uint8_t BSP_CLOCKx , uint32_t msec);
+
 /**
  * @}
  */

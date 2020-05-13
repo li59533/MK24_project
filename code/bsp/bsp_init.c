@@ -20,6 +20,7 @@
  * @{  
  */
 #include "bsp_flash.h"
+#include "bsp_uart.h"
 /**
  * @addtogroup    bsp_init_Modules 
  * @{  
@@ -104,7 +105,7 @@ void BSP_Init(void)
 {
 	
 	BSP_Flash_Init();
-	
+	BSP_UART_Init(BSP_UART1);
 	DEBUG("bsp init\r\n");
 }
 

@@ -417,6 +417,11 @@
               <FileType>1</FileType>
               <FilePath>..\bsp\bsp_init.c</FilePath>
             </File>
+            <File>
+              <FileName>bsp_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\bsp\bsp_uart.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

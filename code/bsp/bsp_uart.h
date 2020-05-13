@@ -31,8 +31,10 @@
 #define BSP_UART1   1
 #define BSP_UART2   2
 
-#define BSP_UART_CONF	BSP_UART0
-#define BSP_UART_E32	BSP_UART2
+
+// ------User def-----
+#define BSP_485COM	BSP_UART1
+// -------------------
 
 /**
  * @}

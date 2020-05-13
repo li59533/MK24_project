@@ -39,8 +39,8 @@
 #define BSP_TIM_MODULE_ENABLE			0
 #define BSP_RTC_MODULE_ENABLE			0
 #define BSP_ADC_MODULE_ENABLE			0
-#define BSP_DMA_MODULE_ENABLE			0
-#define BSP_USART_MODULE_ENABLE			0
+#define BSP_DMA_MODULE_ENABLE			1
+#define BSP_USART_MODULE_ENABLE			1
 #define BSP_FLASH_MODULE_ENABLE			1
 #define BSP_LPV_MODULE_ENABLE			0
 
@@ -88,15 +88,13 @@
 #endif	
 
 #if BSP_DMA_MODULE_ENABLE == 1	
-	#include "fsl_dma.h"
+	#include "fsl_edma.h"
 	#include "fsl_dmamux.h"
 #endif	
 
 #if BSP_USART_MODULE_ENABLE == 1	
 	#include "fsl_uart.h"
-	#include "fsl_lpsci.h"
-	#include "fsl_lpsci_dma.h"
-	#include "fsl_uart_dma.h"
+	#include "fsl_uart_edma.h"
 #endif	
 
 #if BSP_FLASH_MODULE_ENABLE == 1	

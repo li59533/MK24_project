@@ -338,7 +338,7 @@
               <MiscControls>  --library_type=standardlib --c99 --diag_suppress=1296,186,66,111,223  --library_interface=armcc  </MiscControls>
               <Define>SDK_OS_FREE_RTOS, CPU_MK24FN256VDC12, FSL_RTOS_FREE_RTOS, NDEBUG</Define>
               <Undefine></Undefine>
-              <IncludePath>..\app;..\bsp;..\components\CMSIS\Include;..\components\MK24F25612;..\components\MK24F25612\drivers;..\components\MK24F25612\utilities;..\fml;..\mdl;..\mdl\os\include;..\mdl\os\portable\MemMang;..\mdl\os\portable\RVDS\ARM_CM4F;..\mdl\rttviewer;..\task;..\uti</IncludePath>
+              <IncludePath>..\app;..\bsp;..\components\CMSIS\Include;..\components\MK24F25612;..\components\MK24F25612\drivers;..\components\MK24F25612\utilities;..\fml;..\mdl;..\mdl\os\include;..\mdl\os\portable\MemMang;..\mdl\os\portable\RVDS\ARM_CM4F;..\mdl\rttviewer;..\task;..\uti;..\mdl\ModbusRTU</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -705,6 +705,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>mdl/modbus</GroupName>
+          <Files>
+            <File>
+              <FileName>ModbusCRC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\mdl\ModbusRTU\ModbusCRC.c</FilePath>
+            </File>
+            <File>
+              <FileName>ModbusHardwareInit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\mdl\ModbusRTU\ModbusHardwareInit.c</FilePath>
+            </File>
+            <File>
+              <FileName>ModbusRTU_Slave.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\mdl\ModbusRTU\ModbusRTU_Slave.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>task</GroupName>
           <Files>
             <File>
@@ -721,6 +741,11 @@
               <FileName>task_list.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\task\task_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>modbus_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\task\modbus_task.c</FilePath>
             </File>
           </Files>
         </Group>

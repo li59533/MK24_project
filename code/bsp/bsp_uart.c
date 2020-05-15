@@ -17,7 +17,7 @@
  * @addtogroup    XXX 
  * @{  
  */
-
+#include "ModbusRTU_Slave.h"
 /**
  * @addtogroup    bsp_uart_Modules 
  * @{  
@@ -132,7 +132,7 @@ void BSP_UART_SetBaudRate(uint8_t BSP_UARTX , uint32_t buadrate)
 
 		}
 		break;
-		case BSP_UART1: bsp_uart1_init();break;
+		case BSP_UART1:  UART_SetBaudRate(UART1, buadrate,  CLOCK_GetFreq(kCLOCK_CoreSysClk));;break;
 		case BSP_UART2: bsp_uart2_init();break;
 		default:break;
 	}
@@ -198,6 +198,7 @@ void UART_UserCallback(UART_Type *base, uart_edma_handle_t *handle, status_t sta
 edma_handle_t g_uartTxEdmaHandle;
 edma_handle_t g_uartRxEdmaHandle;
 uart_edma_handle_t g_uartEdmaHandle;
+uart_handle_t g_uart1_handle;
 static void bsp_uart1_init(void)
 {
 	uart_config_t uartConfig;
@@ -238,10 +239,13 @@ static void bsp_uart1_init(void)
 
     UART_Init(UART1, &uartConfig, CLOCK_GetFreq(kCLOCK_CoreSysClk));	
 	
+	
 	// -----------------------
 	
 	// --------open irq-------
 	UART_EnableInterrupts( UART1 ,kUART_TransmissionCompleteInterruptEnable);
+	UART_EnableInterrupts( UART1 ,kUART_RxDataRegFullInterruptEnable);
+	NVIC_SetPriority(UART1_RX_TX_IRQn , 6);
 	EnableIRQ(UART1_RX_TX_IRQn);
 	// -----------------------
 	
@@ -339,7 +343,6 @@ void UART2_IRQHandler(void)
 		uint8_t c = 0;
 		c = UART_ReadByte(UART2);
 		DEBUG("Uart R:%X\r\n" , c);
-
 	}
 	
 	if((UART_GetStatusFlags(UART2) & kUART_RxActiveEdgeInterruptEnable )== kUART_RxActiveEdgeInterruptEnable)
@@ -363,10 +366,25 @@ void UART1_RX_TX_IRQHandler(void)
 {
 	if(UART_GetStatusFlags(UART1) &kUART_TransmissionCompleteFlag )
 	{
+
 		DEBUG("kUART_TransmissionCompleteFlag\r\n");
+		UART_EnableTx(UART1, false);
+		
+		UART1->C2 |= 0x01;
+		//UART_TransferHandleIRQ(UART1 , );
+		UART1->C2  &= (~0x01);
+		UART_EnableTx(UART1, true);
 		UART_DisableInterrupts( UART1 ,kUART_TransmissionCompleteInterruptEnable);
 	}
+	if(UART_GetStatusFlags(UART1) &kUART_RxDataRegFullFlag )
+	{
+		DEBUG("kUART_RxDataRegFullFlag\r\n");
+		uint8_t c = 0;
+		c = UART_ReadByte(UART1);
+		DEBUG("Uart R:%X\r\n" , c);		
 
+		ModbusRevOneByte(c);
+	}
 }
 
 void DMA0_IRQHandler(void)
@@ -377,19 +395,13 @@ void DMA0_IRQHandler(void)
 
 // ----------------------------
 
-
 // ------------Test-------------
 uint8_t test_bud[] = {0x00,0x12,0x32,0xff,0x00,0x11,0xcd,0x45};
 void BSP_Uart_Test_Send(void)
 {
 	DEBUG("BSP_Uart_Test_Send\r\n");
-
-	
-
 	BSP_UART_WriteBytes_DMA(BSP_485COM , test_bud, sizeof(test_bud));
-	
 }
-
 
 // -----------------------------
 

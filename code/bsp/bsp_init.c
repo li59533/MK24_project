@@ -105,7 +105,7 @@ void BSP_Init(void)
 {
 	
 	BSP_Flash_Init();
-	BSP_UART_Init(BSP_UART1);
+	//BSP_UART_Init(BSP_UART1);
 	DEBUG("bsp init\r\n");
 }
 

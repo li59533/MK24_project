@@ -43,6 +43,7 @@
  * @{  
  */
 #include "modbus_task.h"
+#include "bsp_tim.h"
 /**
  * @addtogroup    ModbusRTU_Slave_Modules 
  * @{  
@@ -175,8 +176,7 @@ void ModbusRevOneByte(uint8_t byte)
 	if(Uart2RBuf_Ptr<sizeof(Uart2RBuf))
 	{
 		Uart2RBuf[Uart2RBuf_Ptr++]= byte;
-		
-	//	Modbus_Task_StartTimFromISR(50);
+		BSP_Tim_0_StartOnce();	
 	}	
 }
 
@@ -375,7 +375,7 @@ void MBFunction_06(void)
     ModbusSend(modbus_send_buf,8);
 
     //BSP_Pro_Info_UpData();
-    Slave.ID=MB_ReadRegister(MBREGISTERHOLIDING, 5);
+    //Slave.ID=MB_ReadRegister(MBREGISTERHOLIDING, 5);
 }
 
 

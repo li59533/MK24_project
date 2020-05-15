@@ -21,6 +21,8 @@
  */
 #include "bsp_flash.h"
 #include "bsp_uart.h"
+#include "bsp_tim.h"
+#include "bsp_clock.h"
 /**
  * @addtogroup    bsp_init_Modules 
  * @{  
@@ -103,9 +105,10 @@
  */
 void BSP_Init(void)
 {
-	
+	BSP_ShowClock();
 	BSP_Flash_Init();
 	//BSP_UART_Init(BSP_UART1);
+	//BSP_Tim_Init(BSP_TIM0);
 	DEBUG("bsp init\r\n");
 }
 

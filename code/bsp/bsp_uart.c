@@ -314,8 +314,9 @@ void BSP_UART_WriteBytes_DMA(uint8_t BSP_UARTX , uint8_t *buf, uint16_t len)
 	switch(BSP_UARTX)
 	{
 		case BSP_UART0:; break;
-		case BSP_UART1: UART_SendEDMA(UART1, &g_uartEdmaHandle, &xfer);
+		case BSP_UART1: 
 						UART_EnableInterrupts( UART1 ,kUART_TransmissionCompleteInterruptEnable);
+						UART_SendEDMA(UART1, &g_uartEdmaHandle, &xfer);
 						break;
 		case BSP_UART2:; break;
 		default:break;
@@ -367,23 +368,20 @@ void UART1_RX_TX_IRQHandler(void)
 	if(UART_GetStatusFlags(UART1) &kUART_TransmissionCompleteFlag )
 	{
 
-		DEBUG("kUART_TransmissionCompleteFlag\r\n");
+		//DEBUG("kUART_TransmissionCompleteFlag\r\n");
 		UART_EnableTx(UART1, false);
-		
 		UART1->C2 |= 0x01;
-		//UART_TransferHandleIRQ(UART1 , );
 		UART1->C2  &= (~0x01);
 		UART_EnableTx(UART1, true);
 		UART_DisableInterrupts( UART1 ,kUART_TransmissionCompleteInterruptEnable);
 	}
 	if(UART_GetStatusFlags(UART1) &kUART_RxDataRegFullFlag )
 	{
-		DEBUG("kUART_RxDataRegFullFlag\r\n");
-		uint8_t c = 0;
-		c = UART_ReadByte(UART1);
-		DEBUG("Uart R:%X\r\n" , c);		
-
-		ModbusRevOneByte(c);
+//		DEBUG("kUART_RxDataRegFullFlag\r\n");
+//		DEBUG("Uart R:%X\r\n" , c);	
+//		uint8_t c = 0;
+//		c = UART_ReadByte(UART1);
+		ModbusRevOneByte(UART_ReadByte(UART1));
 	}
 }
 

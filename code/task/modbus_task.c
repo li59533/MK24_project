@@ -17,7 +17,7 @@
 #include "task.h"
 #include "timers.h"
 #include "modbus_task.h"
-#include "rtos_tools.h"
+
 /**
  * @addtogroup    XXX 
  * @{  
@@ -125,8 +125,6 @@ void Modbus_Task(void * pvParameter)
 {
 	uint32_t event_flag = 0;
 	ModbusFunctionInit();
-	Modbus_Task_Tim_Init();
-	Modbus_Task_StartTimFromISR(1000);
 	DEBUG("Modbus Task Enter\r\n");
 	UBaseType_t modbustask_ramainheap = 0;
 
@@ -147,14 +145,7 @@ void Modbus_Task(void * pvParameter)
 			ModbusDataProcess();
 			DEBUG("MODBUS_TASK_DATAPROCESS_EVENT\r\n");
 		}		
-		
-		
-		if((event_flag & MODBUS_TASK_REV_EVENT) != 0x00)
-		{
-			rBufToRing();
-		}
 	}
-	
 }
 
 
@@ -202,8 +193,7 @@ void Modbus_Task_StartTimFromISR(uint16_t time_count)
 
 static void modbus_task_tim_callback(TimerHandle_t xTimer)
 {
-	rBufToRing();
-	Modbus_Task_Event_Start(MODBUS_TASK_DATAPROCESS_EVENT, EVENT_FROM_TASK);
+
 }
 
 

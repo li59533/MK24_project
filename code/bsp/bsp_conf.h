@@ -36,7 +36,7 @@
 // -----------BSP Module Active list -------------
 #define BSP_SMC_MODULE_ENABLE			0
 #define BSP_GPIO_MODULE_ENABLE			1
-#define BSP_TIM_MODULE_ENABLE			0
+#define BSP_TIM_MODULE_ENABLE			1
 #define BSP_RTC_MODULE_ENABLE			0
 #define BSP_ADC_MODULE_ENABLE			0
 #define BSP_DMA_MODULE_ENABLE			1
@@ -75,7 +75,7 @@
 
 #if BSP_TIM_MODULE_ENABLE == 1
 	#include "fsl_lptmr.h"	
-	#include "fsl_tpm.h"
+	#include "fsl_ftm.h"
 #endif	
 
 #if BSP_RTC_MODULE_ENABLE == 1	

@@ -18,6 +18,8 @@
  * @{  
  */
 #include "bsp_uart.h"
+#include "bsp_tim.h"
+#include "clog.h"
 /**
  * @addtogroup    ModbusHardwareInit_Modules 
  * @{  
@@ -113,7 +115,7 @@ static void modbusUartInit(void)
 
 static void modbusTimInit(void)
 {
-	
+	BSP_Tim_Init(BSP_TIM0);
 }
 
 void ModbusFunctionInit(void)
@@ -129,6 +131,12 @@ void ModbusFunctionInit(void)
 void ModbusSend(uint8_t * Data,uint16_t Len)
 {
 	BSP_UART_WriteBytes_DMA(BSP_485COM ,Data, Len);
+	
+	if(*Data == 0x04)
+	{
+		DEBUG("something err\r\n");
+	}
+	
 }
 
 
